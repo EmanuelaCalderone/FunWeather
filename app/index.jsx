@@ -2,10 +2,13 @@
 import { Text, View, ImageBackground, StyleSheet, FlatList, ActivityIndicator, Pressable, Platform, Image, Alert } from "react-native";
 
 // hook
-import { useEffect, useContext, useCallback, useMemo, useState, } from "react";
+import { useEffect, useContext, useCallback, useMemo, useState, useRef } from "react";
 
 // icone
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+
+//notifica
+import * as Notifications from 'expo-notifications';
 
 // componenti
 import CitySearch from "./components/CitySearch";
@@ -13,18 +16,14 @@ import QuoteOfTheDay from "./components/QuoteOfTheDay";
 import HourlyForecast from "./components/HourlyForecast";
 import NextThreeDaysForecast from "./components/NextThreeDaysForecast";
 import InfoModal from "./components/InfoModal";
-import { WeatherIcon } from "../utils/icons";
 
-// notifica
+// utils
 import { scheduleDaily10AM } from "../utils/notification";
-
-// logica per sfondi
+import { WeatherIcon } from "../utils/icons";
 import { getBackground, isNightByClock } from "../utils/backgrounds";
-
-// traduzioni
 import { translations } from "../utils/translations";
-//funzione connessione internet
 import { checkConnection } from "../utils/network";
+import { isTablet, scaledSize } from "../utils/devices";
 
 // contesto per lingua, unità di misura e formato orario
 import { SettingsContext } from "../context/SettingsContext";
@@ -37,8 +36,18 @@ import { useWeather } from "../hooks/useWeather";
 // libreria esterna per safe area
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-//responsive
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
+//impostazioni notifiche
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+        shouldShowAlert: false,
+        shouldShowBanner: true,
+        shouldShowList: true,
+        shouldPlaySound: true,
+        shouldSetBadge: false,
+    }),
+});
+
 
 export default function Home() {
 
@@ -64,7 +73,12 @@ export default function Home() {
     const [showInfo, setShowInfo] = useState(false);
 
     //verifica connessione
+    const hasCheckedConnection = useRef(false);
+
     useEffect(() => {
+        if (hasCheckedConnection.current) return; // evita richieste multiple
+        hasCheckedConnection.current = true;
+
         async function verifyConnection() {
             const online = await checkConnection();
             if (!online) {
@@ -74,19 +88,33 @@ export default function Home() {
                 );
             }
         }
-        verifyConnection();
-    }, [language]);
 
-    // per ora aggiornamento orario ogni minuto
+        verifyConnection();
+    }, []); // eseguito solo all'avvio
+
+    // per ora aggiornamento orario ogni minuto, preciso allo scoccare del minuto
     const [now, setNow] = useState(new Date());
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            setNow(new Date());
-        }, 1000 * 60); // ogni minuto
+        const tick = () => setNow(new Date());
 
-        return () => clearInterval(interval);
+        // aggiorna subito
+        tick();
+
+        // calcola il tempo rimanente al prossimo minuto
+        const delay =
+            60000 - (new Date().getSeconds() * 1000 + new Date().getMilliseconds());
+
+        const timeout = setTimeout(() => {
+            tick();
+            const interval = setInterval(tick, 60000); // aggiorna ogni minuto preciso
+            // cleanup dell’interval
+            return () => clearInterval(interval);
+        }, delay);
+
+        return () => clearTimeout(timeout);
     }, []);
+
 
     // per date e orari
     const locale = language === "it" ? "it-IT" : "en-GB";
@@ -110,9 +138,9 @@ export default function Home() {
     const cityNow = useMemo(() => {
         if (!weatherData) return null;
         const offset = weatherData.utc_offset_seconds || 0;
-        const utcNow = Date.now() + new Date().getTimezoneOffset() * 60000;
+        const utcNow = now.getTime() + new Date().getTimezoneOffset() * 60000;
         return new Date(utcNow + offset * 1000);
-    }, [weatherData]);
+    }, [weatherData, now]);
 
     // timezone del dispositivo
     const deviceTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -187,7 +215,7 @@ export default function Home() {
     useEffect(() => {
         if (!isLoaded) return;
         scheduleDaily10AM(language);
-    }, [[isLoaded, language]]);
+    }, [isLoaded, language]);
 
     // spinner solo se:
     // - settings non pronti
@@ -599,80 +627,99 @@ const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: "#111",
     },
+
     background: {
         flex: 1,
     },
+
     fallbackBg: {
         backgroundColor: "#1c1c1e",
     },
+
     topBar: {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        paddingHorizontal: 16,
-        paddingTop: 12,
+        paddingHorizontal: isTablet() ? scaledSize(20) : 16,
+        paddingTop: isTablet() ? scaledSize(12) : 12,
     },
+
     helpButton: {
-        padding: 8,
-        borderRadius: 50,
+        paddingVertical: isTablet() ? scaledSize(8) : 8,
+        paddingHorizontal: isTablet() ? scaledSize(12) : 12,
+        borderRadius: 10,
+        justifyContent: "center",
+        alignItems: "center",
+        minWidth: isTablet() ? scaledSize(36) : 55,
     },
+
     toggles: {
         flexDirection: "row",
     },
+
     toggleButton: {
         backgroundColor: "rgba(117, 114, 114, 0.35)",
-        paddingVertical: 8,
-        paddingHorizontal: 12,
-        borderRadius: 12,
-        marginLeft: 10,
-        minWidth: 55,
+        paddingVertical: isTablet() ? scaledSize(8) : 8,
+        paddingHorizontal: isTablet() ? scaledSize(12) : 12,
+        borderRadius: 20,
         justifyContent: "center",
         alignItems: "center",
+        minWidth: isTablet() ? scaledSize(36) : 55,
+        marginLeft: isTablet() ? scaledSize(10) : 10,
     },
+
     toggleText: {
         fontWeight: "600",
-        fontSize: 14,
+        fontSize: isTablet() ? scaledSize(12) : 13,
         color: "#fff",
     },
+
     header: {
         alignItems: "center",
-        marginVertical: 25,
+        marginVertical: isTablet() ? scaledSize(25) : 25,
     },
+
     location: {
-        fontSize: 20,
+        fontSize: isTablet() ? scaledSize(20) : 20,
         fontWeight: "600",
         color: "#fff",
     },
+
     date: {
-        fontSize: 15,
+        fontSize: isTablet() ? scaledSize(14) : 15,
         fontWeight: "500",
         color: "#fff",
-        marginVertical: 6,
+        marginVertical: isTablet() ? scaledSize(6) : 6,
     },
+
     time: {
-        fontSize: 15,
+        fontSize: isTablet() ? scaledSize(16) : 15,
         fontWeight: "700",
         color: "#fff",
     },
+
     tempRow: {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        gap: 10,
+        gap: isTablet() ? scaledSize(10) : 10,
     },
+
     temperature: {
-        fontSize: 52,
+        fontSize: isTablet() ? scaledSize(45) : 52,
         fontWeight: "700",
         color: "#fff",
     },
+
     condition: {
-        fontSize: 15,
+        fontSize: isTablet() ? scaledSize(14) : 15,
         fontWeight: "500",
         color: "white",
         textAlign: "center",
-        paddingHorizontal: 10,
-        lineHeight: 20,
+        paddingHorizontal: isTablet() ? scaledSize(10) : 10,
+        lineHeight: isTablet() ? scaledSize(18) : 20,
     },
+
     row: {
         flexDirection: "row",
         flexWrap: "wrap",
@@ -680,46 +727,53 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignSelf: "center",
     },
+
     info: {
-        fontSize: 15,
+        fontSize: isTablet() ? scaledSize(14) : 15,
         color: "white",
-        marginRight: 10,
+        marginRight: isTablet() ? scaledSize(10) : 10,
         fontWeight: "500",
     },
+
     quoteBox: {
-        marginTop: 13,
-        marginBottom: 13,
+        marginTop: isTablet() ? scaledSize(20) : 13,
+        marginBottom: isTablet() ? scaledSize(20) : 13,
         justifyContent: "center",
         alignItems: "center",
-        height: 250,
+        height: isTablet() ? scaledSize(250) : 250,
     },
+
     quoteText: {
-        fontSize: 18,
+        fontSize: isTablet() ? scaledSize(16) : 18,
         fontStyle: "italic",
         color: "white",
         textAlign: "center",
-        lineHeight: 24,
+        lineHeight: isTablet() ? scaledSize(22) : 24,
         flexWrap: "wrap",
     },
+
     noQuoteText: {
         fontWeight: "600",
         textAlign: "center",
         color: "#fff",
-        fontSize: 16,
+        fontSize: isTablet() ? scaledSize(14) : 16,
     },
+
     placeholderBox: {
-        margin: 16,
-        padding: 24,
+        margin: isTablet() ? scaledSize(20) : 16,
+        padding: isTablet() ? scaledSize(24) : 24,
         backgroundColor: "rgba(255, 255, 255, 0.1)",
-        borderRadius: 16,
+        borderRadius: isTablet() ? scaledSize(20) : 16,
         alignItems: "center",
         justifyContent: "center",
-        minHeight: 120,
+        minHeight: isTablet() ? scaledSize(120) : 120,
     },
+
     placeholderText: {
-        fontSize: 16,
+        fontSize: isTablet() ? scaledSize(14) : 16,
         fontWeight: "600",
         textAlign: "center",
         color: "#eee",
-    }
+    },
 });
+

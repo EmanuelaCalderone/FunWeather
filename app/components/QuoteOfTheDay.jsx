@@ -1,11 +1,10 @@
-import quotes from "../data/quotes.json";
 import { View, Text, StyleSheet } from "react-native";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { SettingsContext } from "../../context/SettingsContext";
 import { translations } from "../../utils/translations";
-import React from "react";
+import quotes from "../data/quotes.json";
 //responsive
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { isTablet, scaledSize } from "../../utils/devices";
 
 function QuoteOfTheDay({ weatherCondition }) {
     //fallback: se SettingsContext è undefined o non ha language, usa "it"
@@ -65,24 +64,28 @@ const styles = StyleSheet.create({
     container: {
         justifyContent: "center",
         alignItems: "center",
-        borderRadius: 16,
+        borderRadius: isTablet() ? scaledSize(24) : 16,
         backgroundColor: "rgba(117, 114, 114, 0.35)",
-        height: 250,
-        width: 350,
-        paddingHorizontal: 24,
+        height: isTablet() ? scaledSize(220) : 220,
+        width: isTablet() ? scaledSize(360) : 350,
+        paddingHorizontal: isTablet() ? scaledSize(20) : 24,
+        marginTop: isTablet() ? scaledSize(40) : 25,
+        marginBottom: isTablet() ? scaledSize(40) : 25,
     },
 
     quote: {
-        fontSize: 20,
+        fontSize: isTablet() ? scaledSize(16) : 18,
         fontStyle: "italic",
-        lineHeight: 28,
+        lineHeight: isTablet() ? scaledSize(22) : 26,
         color: "white",
         textAlign: "center",
         fontWeight: "400",
-        includeFontPadding: false, // Android: niente spazio extra sopra/sotto
-        textAlignVertical: "center" // Android: aiuta la centratura
-    }
+        includeFontPadding: false,
+        textAlignVertical: "center",
+    },
 });
+
+
 
 
 

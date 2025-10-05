@@ -1,11 +1,10 @@
 import { Text, View, ScrollView, StyleSheet } from "react-native";
 import { WeatherIcon } from "../../utils/icons";
 import { useFormatters } from "../../hooks/useFormatters";
-import React from "react";  //reactMemo per evitare il re-render della lista, se i dati meteo non cambiano
 import { Ionicons } from "@expo/vector-icons";
+import React from 'react'
 //responsive
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-
+import { isTablet, scaledSize } from "../../utils/devices";
 
 function HourlyForecast({ weatherData }) {
     const { formatTemp, formatTime } = useFormatters();
@@ -35,11 +34,10 @@ function HourlyForecast({ weatherData }) {
 
     let startOfPeriod = new Date(now);
 
-    // fino alle 12 ore del gg dopo"
+    // fino alle 12 ore del gg dopo
     let endOfPeriod = new Date(now);
     endOfPeriod.setDate(endOfPeriod.getDate() + 1);
     endOfPeriod.setHours(12, 0, 0, 0);
-
 
     const futureHours = allHours.filter(
         h => h.date >= startOfPeriod && h.date <= endOfPeriod
@@ -92,42 +90,43 @@ function HourlyForecast({ weatherData }) {
         </View>
     );
 }
-
+//reactMemo per evitare il re-render della lista, se i dati meteo non cambiano
 export default React.memo(HourlyForecast);
 
 const styles = StyleSheet.create({
     hourBox: {
-        width: 70,
-        height: 90,
+        width: scaledSize(70),
+        height: scaledSize(90),
         justifyContent: "space-around",
         alignItems: "center",
-        marginRight: 14,
-        marginLeft: 14,
-        paddingVertical: 8,
+        marginRight: scaledSize(14),
+        marginLeft: scaledSize(14),
+        paddingVertical: scaledSize(3),
         backgroundColor: "rgba(117, 114, 114, 0.35)",
-        borderRadius: 16,
+        borderRadius: scaledSize(16),
     },
     hour: {
         color: "#fff",
-        fontSize: 14,
+        fontSize: scaledSize(14),
         fontWeight: "500",
     },
     temp: {
         color: "#FFFFFF",
-        fontSize: 15,
+        fontSize: scaledSize(15),
         fontWeight: "600",
     },
     rainRow: {
         flexDirection: "row",
         alignItems: "center",
-        gap: 1,
-        marginTop: 1.8,
+        gap: scaledSize(1),
+        marginTop: scaledSize(2),
     },
     rain: {
-        fontSize: 10,
+        fontSize: scaledSize(10),
         color: "rgba(10, 165, 212, 1)"
     }
 });
+
 
 
 

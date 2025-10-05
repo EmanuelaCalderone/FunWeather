@@ -1,82 +1,52 @@
-//libreria di Expo per gestire notifiche
 import * as Notifications from 'expo-notifications';
-//oggetto di React Native che dice su quale piattaforma gira l’app (android, ios, web)
-import { Platform } from 'react-native';
-import { translations } from "./translations";
+import { translations } from '../utils/translations';
 
-//mostra notifiche anche in foreground
-Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-        // iOS: mostra banner e inserisci nella Notification List
-        shouldShowBanner: true,
-        shouldShowList: true,
-        // comuni
-        shouldPlaySound: false,
-        shouldSetBadge: false,
-    }),
-});
-
-//solo per Android: obbligatorio definire canale notifiche (richiesto per versione da 8+)
-async function ensureAndroidChannel() {
-    if (Platform.OS === 'android') {
-        await Notifications.setNotificationChannelAsync('default', {
-            name: 'Alerts',
-            importance: Notifications.AndroidImportance.HIGH,
-        });
-    }
-}
-
-export async function scheduleDaily10AM(language) {
-    const lang = String(language)
-        .toLowerCase()
-        .startsWith("en") ? "en" : "it";
-
-    //chiedo lo status dei permessi per la notifica
+export async function scheduleDaily10AM(lang = 'it') {
+    // richiedi permessi
     const { status: existingStatus } = await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
 
-    //se l'accesso non è garantito, li chiede all'utente
-    if (existingStatus !== "granted") {
-        //popup di sistema
+    if (existingStatus !== 'granted') {
         const { status } = await Notifications.requestPermissionsAsync();
-        //aggiorno status con risposta utente
         finalStatus = status;
     }
 
-    //se non vengono concessi, lancia l'errore
-    if (finalStatus !== "granted") {
-        console.warn("Permessi notifica negati");
+    if (finalStatus !== 'granted') {
+        console.log('Permessi notifica negati');
         return;
     }
 
-    await ensureAndroidChannel();
+    // verifica se la notifica giornaliera è già programmata
+    const scheduled = await Notifications.getAllScheduledNotificationsAsync();
+    const dailyAlreadyScheduled = scheduled.some(
+        (n) => n.content.data?.type === 'dailyWeather'
+    );
 
-    //evita duplicati: se già c’è, cancella prima di rischedulare
-    const existing = await Notifications.getAllScheduledNotificationsAsync();
-    for (const n of existing) {
-        if (n.trigger?.repeats && n.trigger?.hour === 10 && n.trigger?.minute === 0) {
-            await Notifications.cancelScheduledNotificationAsync(n.identifier);
-        }
+    if (dailyAlreadyScheduled) {
+        console.log('Notifica giornaliera già programmata');
+        return;
     }
 
-    //usa traduzione corretta
-    const notificationBodyText =
-        translations[lang]?.notificationBodyText || translations.it.notificationBodyText;
+    // calcola la prossima 10:00
+    const now = new Date();
+    const next10AM = new Date();
+    next10AM.setHours(10, 0, 0, 0);
+    if (now >= next10AM) {
+        next10AM.setDate(next10AM.getDate() + 1);
+    }
 
-
-    //programma ogni giorno alle 10:00
     await Notifications.scheduleNotificationAsync({
         content: {
             title: 'FunWeather',
-            body: notificationBodyText,
+            body: translations[lang]?.notificationBodyText || translations.it.notificationBodyText,
+            sound: 'default',
+            data: { type: 'dailyWeather' },
         },
         trigger: {
-            hour: 10,
-            minute: 0,
-            repeats: true,
-            channelId: Platform.OS === 'android' ? 'default' : undefined,
+            date: next10AM,
+            repeats: true,  //si ripete ogni giorno
         },
     });
 
+    console.log('Notifica giornaliera programmata per le 10');
 }
-

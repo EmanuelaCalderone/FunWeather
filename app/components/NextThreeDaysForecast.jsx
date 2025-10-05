@@ -6,7 +6,8 @@ import { SettingsContext } from "../../context/SettingsContext";
 import { translations } from "../../utils/translations";
 import React from "react";
 //responsive
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { isTablet, scaledSize } from "../../utils/devices";
+
 
 function NextThreeDaysForecast({ nextDays }) {
     const { language = "it" } = useContext(SettingsContext) || {};
@@ -86,43 +87,49 @@ export default React.memo(NextThreeDaysForecast);
 
 const styles = StyleSheet.create({
     container: {
-        padding: 16,
+        padding: scaledSize(16),
+        alignItems: "center",
     },
     title: {
-        fontSize: 18,
+        fontSize: scaledSize(16),
         color: "#fff",
-        marginBottom: 12,
+        marginBottom: scaledSize(12),
         textAlign: "center",
+        fontWeight: "400",
     },
     card: {
-        marginBottom: 14,
-        padding: 14,
-        borderRadius: 16,
-        backgroundColor: "rgba(117, 114, 114, 0.35)",
+        width: isTablet() ? "85%" : "90%",
+        backgroundColor: "rgba(255,255,255,0.1)",
+        borderRadius: isTablet() ? scaledSize(32) : 16,
+        padding: isTablet() ? scaledSize(24) : 16,
+        marginVertical: isTablet() ? scaledSize(16) : 8,
+        alignSelf: "center",
     },
+
     dayRow: {
         flexDirection: "row",
         alignItems: "center",
-        marginBottom: 8,
+        marginBottom: scaledSize(8),
     },
     day: {
-        fontSize: 16,
+        fontSize: scaledSize(16),
         fontWeight: "600",
         color: "#FFFFFF",
-        marginLeft: 8,
+        marginLeft: scaledSize(8),
         flexShrink: 1,
     },
     row: {
         flexDirection: "row",
         alignItems: "center",
         flexWrap: "wrap",
-        paddingVertical: 4,
+        paddingVertical: scaledSize(4),
     },
     info: {
-        fontSize: 13,
-        marginLeft: 4,
-        color: "white"
+        fontSize: scaledSize(13),
+        marginLeft: scaledSize(4),
+        color: "white",
     }
 });
+
 
 

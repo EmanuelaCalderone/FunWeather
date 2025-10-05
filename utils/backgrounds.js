@@ -28,12 +28,12 @@ const backgrounds = {
     96: require("../app/assets/backgrounds/grandine.png"),
     99: require("../app/assets/backgrounds/grandine.png"),
 
-    // fenomeni speciali
+    //fenomeni speciali
     afa_umidita: require("../app/assets/backgrounds/afa_umidita.png"),
     vento_forte: require("../app/assets/backgrounds/vento_forte.png"),
     gelo: require("../app/assets/backgrounds/gelo.png"),
 
-    // varianti notturne
+    //varianti notturne
     afa_umidita_night: require("../app/assets/backgrounds/afa_umidita_night.png"),
     gelo_night: require("../app/assets/backgrounds/gelo_night.png"),
     nebbia_night: require("../app/assets/backgrounds/nebbia_night.png"),
@@ -47,7 +47,7 @@ const backgrounds = {
     vento_forte_night: require("../app/assets/backgrounds/vento_forte_night.png"),
 };
 
-// funzione helper: converte ora corrente in minuti dal mezzanotte nel fuso scelto
+//funzione helper: converte ora corrente in minuti dalla mezzanotte nel fuso scelto
 function minutesNowInTZ(tz) {
     const parts = new Intl.DateTimeFormat("en-GB", {
         timeZone: tz,
@@ -101,7 +101,7 @@ export function getBackground(current, daily, timezone) {
     // estraggo dal parametro current i dati meteo
     const { weather_code, temperature_2m, relative_humidity_2m, wind_speed_10m } = current;
 
-    // uso la funzione robusta per validare la timezone
+    // uso la funzione per validare la timezone
     const tz = safeTimeZone(timezone);
 
     // verifico se è notte

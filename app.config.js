@@ -2,7 +2,7 @@ export default {
   expo: {
     name: "Fun Weather",
     slug: "FunWeather",
-    version: "1.0.0",
+    version: "1.1.0",
     orientation: "default",
     scheme: "funweather",
     userInterfaceStyle: "automatic",
@@ -18,6 +18,7 @@ export default {
 
     ios: {
       bundleIdentifier: "com.anonymous.FunWeather",
+      buildNumber: "2",
       supportsTablet: true,
       infoPlist: {
         NSLocationWhenInUseUsageDescription:
@@ -39,6 +40,7 @@ export default {
       edgeToEdgeEnabled: true,
       icon: "./app/assets/images/iconAndroid.png",
       package: "com.anonymous.FunWeather",
+      versionCode: 2,
       supportsTablet: true,
       splash: {
         image: "./app/assets/images/splash_android.png",

@@ -3,7 +3,7 @@ import { View, TextInput, FlatList, Text, Pressable, StyleSheet, ActivityIndicat
 import { SettingsContext } from "../../context/SettingsContext";
 import { translations } from "../../utils/translations";
 //responsive
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { isTablet, scaledSize } from "../../utils/devices";
 
 //debounce per evitare troppe chiamate API (utility function)
 function debounce(fn, delay) {
@@ -42,7 +42,7 @@ function CitySearch({ onSelectCity }) {
         if (!loading && results.length === 0) {
             const timer = setTimeout(() => {
                 setShowNoResults(true);
-            }, 800); //secondi di attesa
+            }, 800); //ms di attesa
 
             return () => clearTimeout(timer);
         } else {
@@ -55,55 +55,70 @@ function CitySearch({ onSelectCity }) {
         debounce(async (text) => {
             if (!text || text.length < 2) {
                 setResults([]);
+                setShowNoResults(false);
                 return;
             }
+
             setLoading(true);
+
             try {
-                //API di Open-Meteo per ricerca città
                 const baseUrl = "https://geocoding-api.open-meteo.com/v1/search";
+                const url = `${baseUrl}?name=${encodeURIComponent(text)}&count=100&language=${language}&format=json`;
 
-                //la lingua usata nella query è la stessa scelta dall’utente nell’app
-                //    - se language="it" > risultati in italiano
-                //    - se language="en" > risultati in inglese
-                const url = `${baseUrl}?name=${encodeURIComponent(
-                    text
-                )}&count=50&language=${language}&format=json`;
-
-                //richiesta GET all'URL che restituisce una promise che si risolve con un oggetto res
                 const res = await fetch(url);
-                //converto il body della risposta HTTP in json; si usa await perché res.json() restituisce una Promise
                 const data = await res.json();
 
                 if (data?.results) {
-                    //mappa per città già "viste", per evitare duplicati
+                    const queryNormalized = normalizeName(text);
                     const seen = new Map();
 
+                    const cityFeatureCodes = ["PPL", "PPLA", "PPLC"];
                     data.results.forEach((item) => {
-                        const key = `${normalizeName(item.name)}-${item.latitude}-${item.longitude}`;
-                        if (!seen.has(key)) {
-                            seen.set(key, {
-                                name: String(item.name || ""),
-                                region: item.admin1 ? String(item.admin1) : "",
-                                country: item.country ? String(item.country) : "",
-                                lat: item.latitude,
-                                lon: item.longitude,
-                            });
-                        } else {
-                            const existing = seen.get(key);
-                            if (hasAccent(item.name) && !hasAccent(existing.name)) {
-                                seen.set(key, {
-                                    name: String(item.name || ""),
-                                    region: item.admin1 ? String(item.admin1) : "",
-                                    country: item.country ? String(item.country) : "",
-                                    lat: item.latitude,
-                                    lon: item.longitude,
-                                });
+                        // solo città con popolazione >=800
+                        if (item.population && item.population >= 800 && cityFeatureCodes.includes(item.feature_code)) {
+                            // "PPL" = populated place / città
+                            const itemNameNormalized = normalizeName(item.name);
+
+                            // solo se il nome contiene la query
+                            if (itemNameNormalized.includes(queryNormalized)) {
+                                const key = `${item.name}-${item.latitude}-${item.longitude}`;
+                                if (!seen.has(key)) {
+                                    seen.set(key, {
+                                        name: String(item.name || ""),
+                                        region: item.admin1 ? String(item.admin1) : "",
+                                        country: item.country ? String(item.country) : "",
+                                        lat: item.latitude,
+                                        lon: item.longitude,
+                                    });
+                                } else {
+                                    const existing = seen.get(key);
+                                    if (hasAccent(item.name) && !hasAccent(existing.name)) {
+                                        seen.set(key, {
+                                            name: String(item.name || ""),
+                                            region: item.admin1 ? String(item.admin1) : "",
+                                            country: item.country ? String(item.country) : "",
+                                            lat: item.latitude,
+                                            lon: item.longitude,
+                                        });
+                                    }
+                                }
                             }
                         }
                     });
 
-                    //converto i valori della mappa in array e li passa a setResults
-                    setResults(Array.from(seen.values()));
+                    // ordina: inizia con query > più corto > altri
+                    const sortedResults = Array.from(seen.values()).sort((a, b) => {
+                        const nameA = normalizeName(a.name);
+                        const nameB = normalizeName(b.name);
+
+                        const aStarts = nameA.startsWith(queryNormalized) ? 0 : 1;
+                        const bStarts = nameB.startsWith(queryNormalized) ? 0 : 1;
+                        if (aStarts !== bStarts) return aStarts - bStarts;
+
+                        return nameA.length - nameB.length;
+                    });
+
+                    setResults(sortedResults);
                 } else {
                     setResults([]);
                 }
@@ -113,8 +128,8 @@ function CitySearch({ onSelectCity }) {
             } finally {
                 setLoading(false);
             }
-        }, 500),
-        [language] //al cambiare della lingua, le ricerche successive saranno in quella lingua
+        }, 300),
+        [language]
     );
 
     //registra subito quello che scrive l'utente aggiornando lo stato query
@@ -173,7 +188,11 @@ function CitySearch({ onSelectCity }) {
                             />
                             {query.length > 0 && (
                                 <Pressable
-                                    onPress={() => setQuery("")}
+                                    onPress={() => {
+                                        setQuery("");
+                                        setResults([]);
+                                        setShowNoResults(false);
+                                    }}
                                     style={{
                                         position: "absolute",
                                         right: 12,
@@ -184,6 +203,7 @@ function CitySearch({ onSelectCity }) {
                                     <Text style={{ fontSize: 18, color: "#888" }}>✕</Text>
                                 </Pressable>
                             )}
+
                         </View>
 
                         {loading && <ActivityIndicator size="small" color="gray" />}
@@ -231,18 +251,19 @@ export default React.memo(CitySearch);
 
 const styles = StyleSheet.create({
     container: {
-        margin: 10,
+        margin: isTablet() ? scaledSize(16) : 10,
         marginBottom: 0
     },
 
     input: {
         backgroundColor: "#FFFFFF",
-        borderRadius: 10,
-        paddingVertical: 10,
-        paddingHorizontal: 12,
-        fontSize: Platform.OS === "android" ? 14 : 15,
-        color: "#000000"
+        borderRadius: isTablet() ? scaledSize(12) : 10,
+        paddingVertical: isTablet() ? scaledSize(8) : 10,
+        paddingHorizontal: isTablet() ? scaledSize(14) : 12,
+        fontSize: isTablet() ? scaledSize(15) : (Platform.OS === "android" ? 14 : 15),
+        color: "#000000",
     },
+
 
     overlay: {
         backgroundColor: "rgba(0,0,0,0.78)",
@@ -251,43 +272,38 @@ const styles = StyleSheet.create({
 
     modalBox: {
         position: "absolute",
-        top: 80,
-        left: 20,
-        right: 20,
+        top: isTablet() ? scaledSize(100) : 80,
+        left: isTablet() ? scaledSize(40) : 20,
+        right: isTablet() ? scaledSize(40) : 20,
         backgroundColor: "#2A2A2A",
-        borderRadius: 16,
-        padding: 14,
+        borderRadius: isTablet() ? scaledSize(20) : 16,
+        padding: isTablet() ? scaledSize(10) : 14,
         maxHeight: "70%",
         shadowColor: "#000",
         shadowOpacity: 0.25,
-        shadowRadius: 10,
+        shadowRadius: isTablet() ? scaledSize(14) : 10,
         elevation: 6
     },
 
     noResults: {
         textAlign: "center",
-        marginTop: 20,
-        fontSize: 15,
+        marginTop: isTablet() ? scaledSize(24) : 20,
+        fontSize: isTablet() ? scaledSize(18) : 15,
         color: "#BBBBBB",
         fontStyle: "italic"
     },
 
     item: {
-        paddingVertical: 14,
-        paddingHorizontal: 16,
+        paddingVertical: isTablet() ? scaledSize(18) : 14,
+        paddingHorizontal: isTablet() ? scaledSize(20) : 16,
         borderBottomWidth: 1,
         borderBottomColor: "#444"
     },
 
     cityName: {
-        fontSize: 16,
+        fontSize: isTablet() ? scaledSize(18) : 16,
         color: "#FFFFFF",
         fontWeight: "500"
     }
-})
-
-
-
-
-
+});
 

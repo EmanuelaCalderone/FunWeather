@@ -57,7 +57,7 @@ Available in **Italian 🇮🇹** and **English 🇬🇧**.
 ## ✨ Main Features
 
 - 🔍 Smart city search with suggestions  
-- 🌡️ Current weather and hourly forecasts up to 12 hours into the next day ✅
+- 🌡️ Current weather and hourly forecasts up to 12 hours into the next day 
 - 📅 3-day forecast  
 - 🎭 Daily ironic quotes linked to weather conditions  
 - 🌓 Dynamic backgrounds  

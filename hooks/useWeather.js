@@ -14,7 +14,7 @@ export function useWeather(latitude, longitude) {
         if (!data) {
             setLoading(true);
         } else {
-            //se ho già dati > sto aggiornando la località
+            //se ho già dati > aggiorno la località
             setUpdating(true);
         }
 

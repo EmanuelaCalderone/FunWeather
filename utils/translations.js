@@ -33,13 +33,11 @@ export const translations = {
             vento_forte: "Vento. Tanto.",
             FREDDISSIMO: "FREDDISSIMO",
             // varianti notturne
-            // varianti notturne
             sereno_night: "Cielo stranamente sereno",
             parzialmente_nuvoloso_night: "Nuvolette notturne",
             simpatica_pioggia_notturna: "Simpatica pioggia notturna",
             affettuoso_vento_notturno: "Affettuoso vento notturno",
             nuvoloso_night: "Nuvolette notturne"
-
         },
         searchCity: "Cerca una collocazione spazio-temporale...",
         nextDays: "Spoiler del tempo per i prossimi 3 giorni",
@@ -89,12 +87,12 @@ export const translations = {
             67: { text: "Biblical flood", keyIt: "Diluvio universale" },
             71: { text: "Romantic movie snow", keyIt: "Neve romantica da film" },
             73: { text: "Cold war snowball fight", keyIt: "Neve da guerra fredda in cortile" },
-            75: { text: "‘Eskimo for a Day’ Blizzard'", keyIt: "Bufera da 'Eschimese per un giorno'", },
+            75: { text: "'Eskimo for a Day’ Blizzard'", keyIt: "Bufera da 'Eschimese per un giorno'", },
             80: { text: "Indoor tropical rain", keyIt: "Pioggia tropicale domestica" },
             81: { text: "Apocalyptic flood", keyIt: "Nubifragio apocalittico" },
             82: { text: "Apocalyptic flood", keyIt: "Nubifragio apocalittico" },
             85: { text: "Cold war snowball fight", keyIt: "Neve da guerra fredda in cortile" },
-            86: { text: "‘Eskimo for a Day’ Blizzard'", keyIt: "Bufera da 'Eschimese per un giorno'", },
+            86: { text: "'Eskimo for a Day’ Blizzard'", keyIt: "Bufera da 'Eschimese per un giorno'", },
             95: { text: "Disaster movie thunderstorm", keyIt: "Temporale da film catastrofico" },
             96: { text: "Happy car repairman hail", keyIt: "Grandine da carrozziere contento" },
             99: { text: "Happy car repairman hail", keyIt: "Grandine da carrozziere contento" },
@@ -102,7 +100,6 @@ export const translations = {
             afa_umidita: { text: "Free sauna", keyIt: "Sauna gratuita" },
             vento_forte: { text: "Wind. A lot.", keyIt: "Vento. Tanto." },
             FREDDISSIMO: { text: "Suuuper cold", keyIt: "FREDDISSIMO" },
-
             // varianti notturne
             sereno_night: { text: "Suspiciously clear sky", keyIt: "Cielo stranamente sereno" },
             parzialmente_nuvoloso_night: { text: "A sprinkle of fluffy clouds", keyIt: "Nuvolette notturne" },

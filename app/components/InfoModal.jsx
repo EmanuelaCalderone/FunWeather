@@ -5,13 +5,14 @@ import { translations } from "../../utils/translations";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 //responsive
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { isTablet, scaledSize } from "../../utils/devices";
+
 
 export default function InfoModal({ visible, onClose }) {
     const { language } = useContext(SettingsContext);
     const t = translations[language]?.info || translations.it.info;
 
-    // Apertura link esterno per supporto
+    //apertura link esterno per supporto
     const handleBuyCoffee = () => {
         Linking.openURL("https://www.buymeacoffee.com/emanuelacld");
     };
@@ -64,75 +65,86 @@ const styles = StyleSheet.create({
         backgroundColor: "rgba(0, 0, 0, 0.78)",
         justifyContent: "center",
         alignItems: "center",
-        padding: 20,
+        padding: isTablet() ? scaledSize(20) : 20,
     },
 
     box: {
-        width: "85%",
-        borderRadius: 20,
-        padding: 26,
+        width: isTablet() ? "70%" : "85%",
+        borderRadius: isTablet() ? scaledSize(20) : 20,
+        padding: isTablet() ? scaledSize(24) : 26,
         alignItems: "center",
         backgroundColor: "#2A2A2A",
         shadowColor: "#000000ff",
         shadowOpacity: 0.25,
-        shadowRadius: 20,
-        shadowOffset: { width: 0, height: 8 },
+        shadowRadius: isTablet() ? scaledSize(16) : 20,
+        shadowOffset: { width: 0, height: isTablet() ? 8 : 8 },
         elevation: 10,
     },
+
     title: {
-        fontSize: 22,
+        fontSize: isTablet() ? scaledSize(18) : 22,
         fontWeight: "700",
         color: "#FFFFFF",
-        marginBottom: 12,
+        marginBottom: isTablet() ? scaledSize(10) : 12,
         textAlign: "center",
     },
+
     author: {
-        fontSize: 16,
+        fontSize: isTablet() ? scaledSize(14) : 16,
         fontWeight: "600",
         color: "white",
-        marginBottom: 8,
+        marginBottom: isTablet() ? scaledSize(8) : 8,
         textAlign: "center",
     },
+
     toContact: {
-        marginTop: 8,
-        marginBottom: 8,
-        fontSize: 15,
+        marginTop: isTablet() ? scaledSize(6) : 8,
+        marginBottom: isTablet() ? scaledSize(6) : 8,
+        fontSize: isTablet() ? scaledSize(12) : 15,
         color: "#B0B0B0",
         textAlign: "center",
     },
+
     linksRow: {
         flexDirection: "row",
         justifyContent: "center",
-        marginTop: 16,
-        gap: 24,
+        marginTop: isTablet() ? scaledSize(12) : 16,
+        gap: isTablet() ? scaledSize(16) : 24,
     },
+
     icon: {
         color: "#CCCCCC",
-        fontSize: 28,
+        fontSize: isTablet() ? scaledSize(24) : 28,
     },
+
     coffeeButton: {
-        marginTop: 16,
+        marginTop: isTablet() ? scaledSize(12) : 16,
         backgroundColor: "#FFFFFF",
-        paddingVertical: 12,
-        paddingHorizontal: 28,
-        borderRadius: 30,
+        paddingVertical: isTablet() ? scaledSize(10) : 12,
+        paddingHorizontal: isTablet() ? scaledSize(24) : 28,
+        borderRadius: isTablet() ? scaledSize(24) : 30,
         alignItems: "center",
         justifyContent: "center",
     },
+
     support: {
-        fontSize: 15,
+        fontSize: isTablet() ? scaledSize(14) : 15,
         fontWeight: "600",
         textAlign: "center",
     },
+
     closeButton: {
-        marginTop: 14,
+        marginTop: isTablet() ? scaledSize(10) : 14,
         backgroundColor: "#CCCCCC",
-        paddingVertical: 10,
-        paddingHorizontal: 24,
-        borderRadius: 30,
-        alignItems: "center"
+        paddingVertical: isTablet() ? scaledSize(8) : 10,
+        paddingHorizontal: isTablet() ? scaledSize(20) : 24,
+        borderRadius: isTablet() ? scaledSize(24) : 30,
+        alignItems: "center",
+        justifyContent: "center",
     }
 });
+
+
 
 
 

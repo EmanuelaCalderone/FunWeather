@@ -33,7 +33,6 @@ const ICON_MAP = {
     default: { comp: Ionicons, name: "help-circle-outline", color: "white" },
 };
 
-
 // Componente React che mostra l'icona meteo corretta in base al codice passato.
 // Utilizza ICON_MAP per determinare la libreria, il nome e il colore dell'icona.
 // Se è notte (night === true), applica un override visivo per evitare icone solari inappropriate.
