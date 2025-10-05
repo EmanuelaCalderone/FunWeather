@@ -1,0 +1,142 @@
+export const translations = {
+    it: {
+        conditions: {
+            0: "Giornata di sole troppo perfetta per essere vera",
+            1: "Giornata di sole troppo perfetta per essere vera",
+            2: "Nuvole artistiche",
+            3: "Grigio esistenziale",
+            45: "Nebbia da film horror",
+            48: "Nebbia da film horror",
+            51: "Pioggerellina fastidiosa",
+            53: "Pioggerellina fastidiosa",
+            55: "Pioggerellina fastidiosa",
+            56: "Pioggerellina fastidiosa",
+            57: "Pioggerellina fastidiosa",
+            61: "Pioggia da lavaggio auto gratuito",
+            63: "Pioggia da lavaggio auto gratuito",
+            65: "Diluvio universale",
+            66: "Pioggia da lavaggio auto gratuito",
+            67: "Diluvio universale",
+            71: "Neve romantica da film",
+            73: "Neve da guerra fredda in cortile",
+            75: "Bufera da 'Eschimese per un giorno'",
+            80: "Pioggia tropicale domestica",
+            81: "Nubifragio apocalittico",
+            82: "Nubifragio apocalittico",
+            85: "Neve da guerra fredda in cortile",
+            86: "Bufera da 'Eschimese per un giorno'",
+            95: "Temporale da film catastrofico",
+            96: "Grandine da carrozziere contento",
+            99: "Grandine da carrozziere contento",
+            //varianti
+            afa_umidita: "Sauna gratuita",
+            vento_forte: "Vento. Tanto.",
+            FREDDISSIMO: "FREDDISSIMO",
+            // varianti notturne
+            // varianti notturne
+            sereno_night: "Cielo stranamente sereno",
+            parzialmente_nuvoloso_night: "Nuvolette notturne",
+            simpatica_pioggia_notturna: "Simpatica pioggia notturna",
+            affettuoso_vento_notturno: "Affettuoso vento notturno",
+            nuvoloso_night: "Nuvolette notturne"
+
+        },
+        searchCity: "Cerca una collocazione spazio-temporale...",
+        nextDays: "Spoiler del tempo per i prossimi 3 giorni",
+        noGps: "Non hai concesso l’accesso al GPS. Cerca una città:",
+        noData: "Nessun dato meteo",
+        error: "Errore nel recupero dati meteo",
+        todayQuote: "Nessuna frase disponibile",
+        notificationBodyText: "Controlla il meteo di oggi e la perla di saggezza del giorno di cui non hai bisogno ma che ti meriti.",
+        errorLocation: "Errore durante il recupero della posizione.",
+        noGpsPermission: "Accesso alla posizione negato. Vai nelle impostazioni per concedere il permesso all'app.",
+        // chiavi per InfoModal
+        info: {
+            title: "Fun Weather - Info",
+            author: "Autore: Emanuela Calderone",
+            bug: "Per contattarmi, segnalare bug o per proporre una battuta che potrebbe apparire nel prossimo aggiornamento:",
+            close: "Chiudi",
+            support: "Ti piace quest'app? Supporta la sviluppatrice!"
+        },
+        //placeholder in caso di no gps
+        noResults: "Nessuna corrispondenza trovata",
+        noQuote: "Nessuna citazione disponibile",
+        selectCity: "Seleziona una città",
+        waitingWeather: "In attesa dei dati meteo",
+        hourlyUnavailable: "Orario non disponibile",
+        forecastUnavailable: "Previsioni non disponibili",
+        //no internet
+        offlineTitle: "Connessione assente",
+        offlineMessage: "Non sei connesso a Internet. Alcune funzioni potrebbero non funzionare."
+    },
+    en: {
+        conditions: {
+            0: { text: "Too-perfect-to-be-true sunshine", keyIt: "Giornata di sole troppo perfetta per essere vera" },
+            1: { text: "Too-perfect-to-be-true sunshine", keyIt: "Giornata di sole troppo perfetta per essere vera" },
+            2: { text: "Artistic clouds", keyIt: "Nuvole artistiche" },
+            3: { text: "Existential gray", keyIt: "Grigio esistenziale" },
+            45: { text: "Horror movie fog", keyIt: "Nebbia da film horror" },
+            48: { text: "Horror movie fog", keyIt: "Nebbia da film horror" },
+            51: { text: "Annoying drizzle", keyIt: "Pioggerellina fastidiosa" },
+            53: { text: "Annoying drizzle", keyIt: "Pioggerellina fastidiosa" },
+            55: { text: "Annoying drizzle", keyIt: "Pioggerellina fastidiosa" },
+            56: { text: "Annoying drizzle", keyIt: "Pioggerellina fastidiosa" },
+            57: { text: "Annoying drizzle", keyIt: "Pioggerellina fastidiosa" },
+            61: { text: "Free car wash rain", keyIt: "Pioggia da lavaggio auto gratuito" },
+            63: { text: "Free car wash rain", keyIt: "Pioggia da lavaggio auto gratuito" },
+            65: { text: "Biblical flood", keyIt: "Diluvio universale" },
+            66: { text: "Free car wash rain", keyIt: "Pioggia da lavaggio auto gratuito" },
+            67: { text: "Biblical flood", keyIt: "Diluvio universale" },
+            71: { text: "Romantic movie snow", keyIt: "Neve romantica da film" },
+            73: { text: "Cold war snowball fight", keyIt: "Neve da guerra fredda in cortile" },
+            75: { text: "‘Eskimo for a Day’ Blizzard'", keyIt: "Bufera da 'Eschimese per un giorno'", },
+            80: { text: "Indoor tropical rain", keyIt: "Pioggia tropicale domestica" },
+            81: { text: "Apocalyptic flood", keyIt: "Nubifragio apocalittico" },
+            82: { text: "Apocalyptic flood", keyIt: "Nubifragio apocalittico" },
+            85: { text: "Cold war snowball fight", keyIt: "Neve da guerra fredda in cortile" },
+            86: { text: "‘Eskimo for a Day’ Blizzard'", keyIt: "Bufera da 'Eschimese per un giorno'", },
+            95: { text: "Disaster movie thunderstorm", keyIt: "Temporale da film catastrofico" },
+            96: { text: "Happy car repairman hail", keyIt: "Grandine da carrozziere contento" },
+            99: { text: "Happy car repairman hail", keyIt: "Grandine da carrozziere contento" },
+            //varianti
+            afa_umidita: { text: "Free sauna", keyIt: "Sauna gratuita" },
+            vento_forte: { text: "Wind. A lot.", keyIt: "Vento. Tanto." },
+            FREDDISSIMO: { text: "Suuuper cold", keyIt: "FREDDISSIMO" },
+
+            // varianti notturne
+            sereno_night: { text: "Suspiciously clear sky", keyIt: "Cielo stranamente sereno" },
+            parzialmente_nuvoloso_night: { text: "A sprinkle of fluffy clouds", keyIt: "Nuvolette notturne" },
+            simpatica_pioggia_notturna: { text: "Charming night rain", keyIt: "Simpatica pioggia notturna" },
+            affettuoso_vento_notturno: { text: "Affectionate night wind", keyIt: "Affettuoso vento notturno" },
+            nuvoloso_night: { text: "Plenty of fluffy clouds", keyIt: "Nuvolette notturne" }
+        },
+        searchCity: "Search for a space-time location...",
+        nextDays: "Weather spoilers for the next 3 days",
+        noGps: "You didn’t allow GPS access. Search a city:",
+        noData: "No weather data",
+        error: "Error retrieving weather data",
+        todayQuote: "No quote available",
+        notificationBodyText: "Check today’s weather and the pearl of wisdom of the day you don’t need but definitely deserve.",
+        errorLocation: "Error while retrieving location.",
+        noGpsPermission: "Location access denied. Please enable permissions in settings.",
+        // chiavi per InfoModal
+        info: {
+            title: "Fun Weather - Info",
+            author: "Author: Emanuela Calderone",
+            bug: "To contact me, report a bug, or suggest your own joke that might appear in the next update:",
+            close: "Close",
+            support: "Like this app? Support the developer!",
+        },
+        //placeholder in caso di no gps
+        noResults: "No matches found",
+        noQuote: "No quote available",
+        selectCity: "Select a city",
+        waitingWeather: "Waiting for weather data",
+        hourlyUnavailable: "Hourly forecast unavailable",
+        forecastUnavailable: "Forecast unavailable",
+        //no internet
+        offlineTitle: "No connection",
+        offlineMessage: "You are offline. Some features may not work."
+    }
+}
+

@@ -1,0 +1,2 @@
+"NSLocationWhenInUseUsageDescription" = "We use your location to show local weather.";
+"NSUserNotificationUsageDescription" = "We send a daily weather notification at 10:00 AM.";

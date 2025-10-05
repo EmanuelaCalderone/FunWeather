@@ -1,0 +1,3 @@
+<resources>
+  <string name="NSLocationWhenInUseUsageDescription">"We use your location to show local weather."</string>
+</resources>
