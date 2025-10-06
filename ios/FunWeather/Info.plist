@@ -64,14 +64,6 @@
 	<key>NSUserNotificationUsageDescription</key>
 	<string>Mostriamo una notifica giornaliera sul meteo alle 10:00.</string>
 	<key>UILaunchStoryboardName</key>
-	<string>SplashScreen</string>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>arm64</string>
-	</array>
-	<key>UIRequiresFullScreen</key>
-	<false/>
-	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleDefault</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
