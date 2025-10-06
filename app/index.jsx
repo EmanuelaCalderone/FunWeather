@@ -125,6 +125,7 @@ export default function Home() {
         error: gpsErrorMsg,
         loading: isLocationLoading,
         setManualLocation,
+        useCurrentLocation,
     } = useLocation();
 
     const {
@@ -206,7 +207,6 @@ export default function Home() {
             new Date().toLocaleString("en-US", { timeZone: tz }); // se non lancia > valido
             return tz;
         } catch (e) {
-            console.warn("⚠️ Timezone non valida dall’API:", tz, " > fallback a UTC");
             return "UTC";
         }
     }
@@ -361,57 +361,51 @@ export default function Home() {
                 ListHeaderComponent={
                     <View>
                         <View style={styles.topBar}>
-                            {/* toggle */}
-                            <Pressable
-                                style={styles.helpButton}
-                                onPress={() => setShowInfo(true)}
-                            >
-                                <Ionicons
-                                    name="help-circle-outline"
-                                    size={28}
-                                    color="white"
-                                />
-                            </Pressable>
-
-                            {/* lingua */}
-                            <View style={styles.toggles}>
+                            {/* Colonna sinistra: ? e GPS */}
+                            <View style={styles.leftColumn}>
                                 <Pressable
-                                    style={styles.toggleButton}
+                                    onPress={() => setShowInfo(true)}
+                                    style={[styles.buttonBase, styles.sideButton]}
+                                >
+                                    <Ionicons name="help-circle-outline" size={25} color="white" />
+                                </Pressable>
+
+                                <Pressable
+                                    onPress={useCurrentLocation}
+                                    style={[styles.buttonBase, styles.sideButton]}
+                                >
+                                    <Ionicons name="locate-outline" size={25} color="white" />
+                                </Pressable>
+                            </View>
+
+                            {/* Colonna destra: toggle centrali */}
+                            <View style={styles.rightColumn}>
+                                <Pressable
                                     onPress={toggleLanguage}
+                                    style={[styles.buttonBase, styles.toggleButton]}
                                 >
-                                    <Text style={styles.toggleText}>
-                                        {language === "en" ? "IT" : "EN"}
-                                    </Text>
+                                    <Text style={styles.toggleText}>{language === "en" ? "IT" : "EN"}</Text>
                                 </Pressable>
 
-                                {/* formato orario */}
                                 <Pressable
-                                    style={styles.toggleButton}
                                     onPress={toggleTimeFormat}
+                                    style={[styles.buttonBase, styles.toggleButton]}
                                 >
-                                    <Text style={styles.toggleText}>
-                                        {timeFormat === "12h" ? "24h" : "12h"}
-                                    </Text>
+                                    <Text style={styles.toggleText}>{timeFormat === "12h" ? "24h" : "12h"}</Text>
                                 </Pressable>
 
-                                {/* °C/°F */}
                                 <Pressable
-                                    style={styles.toggleButton}
                                     onPress={toggleUnitTemp}
+                                    style={[styles.buttonBase, styles.toggleButton]}
                                 >
-                                    <Text style={styles.toggleText}>
-                                        {unitTemp === "fahrenheit" ? "°C" : "°F"}
-                                    </Text>
+                                    <Text style={styles.toggleText}>{unitTemp === "fahrenheit" ? "°C" : "°F"}</Text>
                                 </Pressable>
 
-                                {/* km/h - mph */}
                                 <Pressable
-                                    style={styles.toggleButton}
                                     onPress={toggleUnitWind}
+                                    style={[styles.buttonBase, styles.toggleButton]}
                                 >
-                                    <Text style={styles.toggleText}>
-                                        {unitWind === "mph" ? "km/h" : "mph"}
-                                    </Text>
+                                    <Text style={styles.toggleText}>{unitWind === "mph" ? "km/h" : "mph"}</Text>
                                 </Pressable>
                             </View>
                         </View>
@@ -638,33 +632,23 @@ const styles = StyleSheet.create({
 
     topBar: {
         flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        paddingHorizontal: isTablet() ? scaledSize(20) : 16,
-        paddingTop: isTablet() ? scaledSize(12) : 12,
-    },
-
-    helpButton: {
-        paddingVertical: isTablet() ? scaledSize(8) : 8,
-        paddingHorizontal: isTablet() ? scaledSize(12) : 12,
-        borderRadius: 10,
         justifyContent: "center",
         alignItems: "center",
-        minWidth: isTablet() ? scaledSize(36) : 55,
+        paddingHorizontal: isTablet() ? scaledSize(20) : 16,
+        paddingTop: isTablet() ? scaledSize(20) : 18,
     },
 
-    toggles: {
-        flexDirection: "row",
+    buttonBase: {
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 10,
     },
 
     toggleButton: {
         backgroundColor: "rgba(117, 114, 114, 0.35)",
-        paddingVertical: isTablet() ? scaledSize(8) : 8,
-        paddingHorizontal: isTablet() ? scaledSize(12) : 12,
-        borderRadius: 20,
-        justifyContent: "center",
-        alignItems: "center",
-        minWidth: isTablet() ? scaledSize(36) : 55,
+        paddingVertical: isTablet() ? scaledSize(10) : 10,
+        paddingHorizontal: isTablet() ? scaledSize(14) : 14,
+        minWidth: isTablet() ? scaledSize(40) : 60,
         marginLeft: isTablet() ? scaledSize(10) : 10,
     },
 
@@ -672,6 +656,12 @@ const styles = StyleSheet.create({
         fontWeight: "600",
         fontSize: isTablet() ? scaledSize(12) : 13,
         color: "#fff",
+    },
+
+    centerToggles: {
+        flexDirection: "row",
+        justifyContent: "center",
+        gap: isTablet() ? scaledSize(2) : 2,
     },
 
     header: {
@@ -731,7 +721,6 @@ const styles = StyleSheet.create({
     info: {
         fontSize: isTablet() ? scaledSize(14) : 15,
         color: "white",
-        marginRight: isTablet() ? scaledSize(10) : 10,
         fontWeight: "500",
     },
 
@@ -775,5 +764,22 @@ const styles = StyleSheet.create({
         textAlign: "center",
         color: "#eee",
     },
-});
 
+    leftColumn: {
+        flexDirection: "row",
+        alignItems: "center",
+        gap: isTablet() ? scaledSize(2) : 2,
+    },
+
+    rightColumn: {
+        flexDirection: "row",
+        alignItems: "center",
+        gap: isTablet() ? scaledSize(4) : 4,
+        marginRight: isTablet() ? scaledSize(12) : 12,
+    },
+
+    sideButton: {
+        paddingVertical: isTablet() ? scaledSize(6) : 6,
+        paddingHorizontal: isTablet() ? scaledSize(8) : 8
+    }
+});

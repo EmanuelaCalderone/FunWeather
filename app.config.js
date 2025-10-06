@@ -12,8 +12,8 @@ export default {
     icon: "./app/assets/images/icon.png",
     splash: {
       image: "./app/assets/images/splash.png",
-      resizeMode: "cover",
-      backgroundColor: "#000000"
+      resizeMode: "contain",
+      backgroundColor: "#194350"
     },
 
     ios: {
@@ -21,6 +21,7 @@ export default {
       buildNumber: "2",
       supportsTablet: true,
       infoPlist: {
+        UILaunchStoryboardName: "SplashScreen",
         NSLocationWhenInUseUsageDescription:
           "Usiamo la tua posizione per mostrarti il meteo locale.",
         NSUserNotificationUsageDescription:
@@ -40,7 +41,7 @@ export default {
       edgeToEdgeEnabled: true,
       icon: "./app/assets/images/iconAndroid.png",
       package: "com.anonymous.FunWeather",
-      versionCode: 2,
+      versionCode: 1,
       supportsTablet: true,
       splash: {
         image: "./app/assets/images/splash_android.png",

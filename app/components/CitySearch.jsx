@@ -2,10 +2,9 @@ import React, { useState, useCallback, useContext, useEffect } from "react";
 import { View, TextInput, FlatList, Text, Pressable, StyleSheet, ActivityIndicator, Modal, TouchableWithoutFeedback, Platform, StatusBar } from "react-native";
 import { SettingsContext } from "../../context/SettingsContext";
 import { translations } from "../../utils/translations";
-//responsive
 import { isTablet, scaledSize } from "../../utils/devices";
 
-//debounce per evitare troppe chiamate API (utility function)
+// debounce utility
 function debounce(fn, delay) {
     let timeout;
     return (...args) => {
@@ -13,44 +12,41 @@ function debounce(fn, delay) {
         timeout = setTimeout(() => fn(...args), delay);
     };
 }
-//funzione per normalizzare i nomi (rimuove accenti)
+
+// normalizza nomi (rimuove accenti)
 function normalizeName(name) {
     return name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 }
 
-//funzione per rilevare se un nome contiene accenti
+// rileva accenti
 function hasAccent(str) {
     return /[^\u0000-\u007F]/.test(str);
 }
 
 function CitySearch({ onSelectCity }) {
     const { language = "it" } = useContext(SettingsContext) || {};
-
     const [query, setQuery] = useState("");
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     const [showNoResults, setShowNoResults] = useState(false);
 
-    //nessun risultato trovato
+    const validFeatureCodes = ["PPL", "PPLA", "PPLC", "PPLS", "PPLA2", "PPLA3"];
+
+    // Messaggio "nessun risultato"
     useEffect(() => {
         if (query.length < 2) {
             setShowNoResults(false);
             return;
         }
-
         if (!loading && results.length === 0) {
-            const timer = setTimeout(() => {
-                setShowNoResults(true);
-            }, 800); //ms di attesa
-
+            const timer = setTimeout(() => setShowNoResults(true), 800);
             return () => clearTimeout(timer);
         } else {
             setShowNoResults(false);
         }
     }, [query, results, loading]);
-
-    //ricerca città con debounce
+    // Ricerca città con debounce
     const searchCity = useCallback(
         debounce(async (text) => {
             if (!text || text.length < 2) {
@@ -60,11 +56,9 @@ function CitySearch({ onSelectCity }) {
             }
 
             setLoading(true);
-
             try {
                 const baseUrl = "https://geocoding-api.open-meteo.com/v1/search";
                 const url = `${baseUrl}?name=${encodeURIComponent(text)}&count=100&language=${language}&format=json`;
-
                 const res = await fetch(url);
                 const data = await res.json();
 
@@ -72,49 +66,35 @@ function CitySearch({ onSelectCity }) {
                     const queryNormalized = normalizeName(text);
                     const seen = new Map();
 
-                    const cityFeatureCodes = ["PPL", "PPLA", "PPLC"];
                     data.results.forEach((item) => {
-                        // solo città con popolazione >=800
-                        if (item.population && item.population >= 800 && cityFeatureCodes.includes(item.feature_code)) {
-                            // "PPL" = populated place / città
-                            const itemNameNormalized = normalizeName(item.name);
+                        if (!validFeatureCodes.includes(item.feature_code)) return;
 
-                            // solo se il nome contiene la query
-                            if (itemNameNormalized.includes(queryNormalized)) {
-                                const key = `${item.name}-${item.latitude}-${item.longitude}`;
-                                if (!seen.has(key)) {
-                                    seen.set(key, {
-                                        name: String(item.name || ""),
-                                        region: item.admin1 ? String(item.admin1) : "",
-                                        country: item.country ? String(item.country) : "",
-                                        lat: item.latitude,
-                                        lon: item.longitude,
-                                    });
-                                } else {
-                                    const existing = seen.get(key);
-                                    if (hasAccent(item.name) && !hasAccent(existing.name)) {
-                                        seen.set(key, {
-                                            name: String(item.name || ""),
-                                            region: item.admin1 ? String(item.admin1) : "",
-                                            country: item.country ? String(item.country) : "",
-                                            lat: item.latitude,
-                                            lon: item.longitude,
-                                        });
-                                    }
-                                }
-                            }
+                        const itemNameNormalized = normalizeName(item.name);
+                        if (!itemNameNormalized.includes(queryNormalized)) return;
+
+                        // chiave affidabile senza admin1
+                        const key = `${itemNameNormalized}-${item.country}`;
+
+                        if (!seen.has(key)) {
+                            seen.set(key, {
+                                name: item.name || "",
+                                region: item.admin1 || "",
+                                country: item.country || "",
+                                lat: item.latitude,
+                                lon: item.longitude
+                            });
                         }
                     });
 
-                    // ordina: inizia con query > più corto > altri
+                    // Ordina per:
+                    // 1. inizia con la query
+                    // 2. lunghezza del nome più corto
                     const sortedResults = Array.from(seen.values()).sort((a, b) => {
                         const nameA = normalizeName(a.name);
                         const nameB = normalizeName(b.name);
-
                         const aStarts = nameA.startsWith(queryNormalized) ? 0 : 1;
                         const bStarts = nameB.startsWith(queryNormalized) ? 0 : 1;
                         if (aStarts !== bStarts) return aStarts - bStarts;
-
                         return nameA.length - nameB.length;
                     });
 
@@ -132,7 +112,7 @@ function CitySearch({ onSelectCity }) {
         [language]
     );
 
-    //registra subito quello che scrive l'utente aggiornando lo stato query
+
     const handleChange = (text) => {
         setQuery(text);
         searchCity(text);
@@ -140,18 +120,16 @@ function CitySearch({ onSelectCity }) {
 
     return (
         <View style={styles.container}>
-            {/* SE la modale è chiusa > mostro l’input nella schermata */}
             {!modalVisible && (
                 <TextInput
                     style={styles.input}
                     placeholder={translations?.[language]?.searchCity}
                     placeholderTextColor="darkgrey"
                     value={query}
-                    onFocus={() => setModalVisible(true)} // apro la modale quando riceve focus
+                    onFocus={() => setModalVisible(true)}
                 />
             )}
 
-            {/* SE la modale è aperta > mostro la modale */}
             {modalVisible && (
                 <Modal
                     transparent
@@ -159,20 +137,21 @@ function CitySearch({ onSelectCity }) {
                     animationType="fade"
                     visible={modalVisible}
                     onRequestClose={() => {
-                        setModalVisible(false)
+                        setModalVisible(false);
                         setQuery("");
                         setResults([]);
                         setShowNoResults(false);
                     }}
                 >
                     <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
-
-                    <TouchableWithoutFeedback onPress={() => {
-                        setModalVisible(false);
-                        setQuery("");
-                        setResults([]);
-                        setShowNoResults(false);
-                    }}>
+                    <TouchableWithoutFeedback
+                        onPress={() => {
+                            setModalVisible(false);
+                            setQuery("");
+                            setResults([]);
+                            setShowNoResults(false);
+                        }}
+                    >
                         <View style={styles.overlay} />
                     </TouchableWithoutFeedback>
 
@@ -197,53 +176,45 @@ function CitySearch({ onSelectCity }) {
                                         position: "absolute",
                                         right: 12,
                                         top: "50%",
-                                        transform: [{ translateY: -10 }],
+                                        transform: [{ translateY: -10 }]
                                     }}
                                 >
                                     <Text style={{ fontSize: 18, color: "#888" }}>✕</Text>
                                 </Pressable>
                             )}
-
                         </View>
 
                         {loading && <ActivityIndicator size="small" color="gray" />}
 
                         {showNoResults ? (
-                            <Text style={styles.noResults}>
-                                {translations?.[language]?.noResults}
-                            </Text>
+                            <Text style={styles.noResults}>{translations?.[language]?.noResults}</Text>
                         ) : (
                             <FlatList
                                 data={results}
                                 keyExtractor={(item) => `${item.lat}-${item.lon}`}
-                                renderItem={
-                                    ({ item }) => (
-                                        <Pressable
-                                            style={styles.item}
-                                            onPress={
-                                                () => {
-                                                    onSelectCity(item);
-                                                    setQuery("");
-                                                    setResults([]);
-                                                    setModalVisible(false);
-                                                }
-                                            }
-                                        >
-                                            <Text style={styles.cityName}>
-                                                {String(item.name || "")}
-                                                {item.region ? `, ${String(item.region)}` : ""}
-                                                {item.country ? `, ${String(item.country)}` : ""}
-                                            </Text>
-                                        </Pressable>
-                                    )}
+                                renderItem={({ item }) => (
+                                    <Pressable
+                                        style={styles.item}
+                                        onPress={() => {
+                                            onSelectCity(item);
+                                            setQuery("");
+                                            setResults([]);
+                                            setModalVisible(false);
+                                        }}
+                                    >
+                                        <Text style={styles.cityName}>
+                                            {item.name}
+                                            {item.region ? `, ${item.region}` : ""}
+                                            {item.country ? `, ${item.country}` : ""}
+                                        </Text>
+                                    </Pressable>
+                                )}
                             />
                         )}
                     </View>
-
-                </Modal >
-            )
-            }
-        </View >
+                </Modal>
+            )}
+        </View>
     );
 }
 
@@ -254,22 +225,18 @@ const styles = StyleSheet.create({
         margin: isTablet() ? scaledSize(16) : 10,
         marginBottom: 0
     },
-
     input: {
         backgroundColor: "#FFFFFF",
         borderRadius: isTablet() ? scaledSize(12) : 10,
         paddingVertical: isTablet() ? scaledSize(8) : 10,
         paddingHorizontal: isTablet() ? scaledSize(14) : 12,
-        fontSize: isTablet() ? scaledSize(15) : (Platform.OS === "android" ? 14 : 15),
-        color: "#000000",
+        fontSize: isTablet() ? scaledSize(15) : Platform.OS === "android" ? 14 : 15,
+        color: "#000000"
     },
-
-
     overlay: {
         backgroundColor: "rgba(0,0,0,0.78)",
-        ...StyleSheet.absoluteFillObject,
+        ...StyleSheet.absoluteFillObject
     },
-
     modalBox: {
         position: "absolute",
         top: isTablet() ? scaledSize(100) : 80,
@@ -284,7 +251,6 @@ const styles = StyleSheet.create({
         shadowRadius: isTablet() ? scaledSize(14) : 10,
         elevation: 6
     },
-
     noResults: {
         textAlign: "center",
         marginTop: isTablet() ? scaledSize(24) : 20,
@@ -292,18 +258,15 @@ const styles = StyleSheet.create({
         color: "#BBBBBB",
         fontStyle: "italic"
     },
-
     item: {
         paddingVertical: isTablet() ? scaledSize(18) : 14,
         paddingHorizontal: isTablet() ? scaledSize(20) : 16,
         borderBottomWidth: 1,
         borderBottomColor: "#444"
     },
-
     cityName: {
         fontSize: isTablet() ? scaledSize(18) : 16,
         color: "#FFFFFF",
         fontWeight: "500"
     }
 });
-

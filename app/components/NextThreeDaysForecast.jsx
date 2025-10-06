@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
         fontWeight: "400",
     },
     card: {
-        width: isTablet() ? "85%" : "90%",
+        width: isTablet() ? "100%" : "100%",
         backgroundColor: "rgba(255,255,255,0.1)",
         borderRadius: isTablet() ? scaledSize(32) : 16,
         padding: isTablet() ? scaledSize(24) : 16,
