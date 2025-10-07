@@ -3,6 +3,7 @@ import { StatusBar } from "react-native";
 import { SettingsProvider } from "../context/SettingsContext";
 import { Slot } from "expo-router";
 
+
 export default function RootLayout() {
     return (
         <SafeAreaProvider>

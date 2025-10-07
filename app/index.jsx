@@ -36,19 +36,6 @@ import { useWeather } from "../hooks/useWeather";
 // libreria esterna per safe area
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-
-//impostazioni notifiche
-Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-        shouldShowAlert: false,
-        shouldShowBanner: true,
-        shouldShowList: true,
-        shouldPlaySound: true,
-        shouldSetBadge: false,
-    }),
-});
-
-
 export default function Home() {
 
     // hook per margini sotto notch

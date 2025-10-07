@@ -8,30 +8,26 @@
 
 /* Begin PBXBuildFile section */
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		3C3E3A7E9FBB41058720E871 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F0E56B1FC2FC4EDBAAB9207F /* InfoPlist.strings */; };
-		3E461D99554A48A4959DE609 /* SplashScreen in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen */; };
-		43B0C7BEBFACF22A7ECDCE91 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 7CB8BCBC31F3580C9540C629 /* PrivacyInfo.xcprivacy */; };
-		45DC28B6D20D46858FCB7BDB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EB38278BD37748AE84E764F8 /* InfoPlist.strings */; };
-		7ACDE77B58CCD55E9365D21D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0FA5F44BF25E047020FE712 /* ExpoModulesProvider.swift */; };
+		36E460C592BC88613BAFB811 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 025D604B1AB43679CF4917B5 /* PrivacyInfo.xcprivacy */; };
+		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
+		7572F328B66E22039698A850 /* libPods-FunWeather.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19100E8BB6626F3E2C7D857D /* libPods-FunWeather.a */; };
+		A62F2B7FA92F74F0D78B0121 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664C2289A0B1B1AE26EA691C /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
-		FCB749182A7333F6A06DB266 /* libPods-FunWeather.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 25F771D640C527A7D5F91F07 /* libPods-FunWeather.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		025D604B1AB43679CF4917B5 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = FunWeather/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* FunWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FunWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = FunWeather/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = FunWeather/Info.plist; sourceTree = "<group>"; };
-		25F771D640C527A7D5F91F07 /* libPods-FunWeather.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FunWeather.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		41548C6044E26BE53ABDC136 /* Pods-FunWeather.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FunWeather.release.xcconfig"; path = "Target Support Files/Pods-FunWeather/Pods-FunWeather.release.xcconfig"; sourceTree = "<group>"; };
-		7CB8BCBC31F3580C9540C629 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = FunWeather/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		AA286B85B6C04FC6940260E9 /* SplashScreen */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = SplashScreen; path = FunWeather/SplashScreen; sourceTree = "<group>"; };
-		B0FA5F44BF25E047020FE712 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-FunWeather/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		19100E8BB6626F3E2C7D857D /* libPods-FunWeather.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FunWeather.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5986BBFBC375B6BAC1FB2859 /* Pods-FunWeather.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FunWeather.release.xcconfig"; path = "Target Support Files/Pods-FunWeather/Pods-FunWeather.release.xcconfig"; sourceTree = "<group>"; };
+		664C2289A0B1B1AE26EA691C /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-FunWeather/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		9B4C0DC175A4C870CF207176 /* Pods-FunWeather.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FunWeather.debug.xcconfig"; path = "Target Support Files/Pods-FunWeather/Pods-FunWeather.debug.xcconfig"; sourceTree = "<group>"; };
+		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = FunWeather/SplashScreen.storyboard; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
-		C5AE8C517F7AADD3499C068A /* Pods-FunWeather.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FunWeather.debug.xcconfig"; path = "Target Support Files/Pods-FunWeather/Pods-FunWeather.debug.xcconfig"; sourceTree = "<group>"; };
-		EB38278BD37748AE84E764F8 /* InfoPlist.strings */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		F0E56B1FC2FC4EDBAAB9207F /* InfoPlist.strings */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = FunWeather/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* FunWeather-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "FunWeather-Bridging-Header.h"; path = "FunWeather/FunWeather-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -41,7 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FCB749182A7333F6A06DB266 /* libPods-FunWeather.a in Frameworks */,
+				7572F328B66E22039698A850 /* libPods-FunWeather.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,44 +52,37 @@
 				BB2F792B24A3F905000567C9 /* Supporting */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				AA286B85B6C04FC6940260E9 /* SplashScreen */,
-				7CB8BCBC31F3580C9540C629 /* PrivacyInfo.xcprivacy */,
+				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
+				025D604B1AB43679CF4917B5 /* PrivacyInfo.xcprivacy */,
 			);
 			name = FunWeather;
+			sourceTree = "<group>";
+		};
+		19B67B89750B1DB98D991D16 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9B4C0DC175A4C870CF207176 /* Pods-FunWeather.debug.xcconfig */,
+				5986BBFBC375B6BAC1FB2859 /* Pods-FunWeather.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		1C1CA2326824C455FEDB4AEF /* ExpoModulesProviders */ = {
+			isa = PBXGroup;
+			children = (
+				920B0A40F147481B699E88DA /* FunWeather */,
+			);
+			name = ExpoModulesProviders;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				25F771D640C527A7D5F91F07 /* libPods-FunWeather.a */,
+				19100E8BB6626F3E2C7D857D /* libPods-FunWeather.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		565F510CDCC79F59E62989E6 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				C5AE8C517F7AADD3499C068A /* Pods-FunWeather.debug.xcconfig */,
-				41548C6044E26BE53ABDC136 /* Pods-FunWeather.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
-		576F7C4CA220EC3C517BE185 /* FunWeather */ = {
-			isa = PBXGroup;
-			children = (
-				B0FA5F44BF25E047020FE712 /* ExpoModulesProvider.swift */,
-			);
-			name = FunWeather;
-			sourceTree = "<group>";
-		};
-		5B4CB67DF7430C4664E3508C /* ExpoModulesProviders */ = {
-			isa = PBXGroup;
-			children = (
-				576F7C4CA220EC3C517BE185 /* FunWeather */,
-			);
-			name = ExpoModulesProviders;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -110,8 +99,8 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				565F510CDCC79F59E62989E6 /* Pods */,
-				5B4CB67DF7430C4664E3508C /* ExpoModulesProviders */,
+				19B67B89750B1DB98D991D16 /* Pods */,
+				1C1CA2326824C455FEDB4AEF /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -126,31 +115,21 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		AEFFC248F6914CA3B3BD3E9B /* it.lproj */ = {
+		920B0A40F147481B699E88DA /* FunWeather */ = {
 			isa = PBXGroup;
 			children = (
-				F0E56B1FC2FC4EDBAAB9207F /* InfoPlist.strings */,
+				664C2289A0B1B1AE26EA691C /* ExpoModulesProvider.swift */,
 			);
-			name = it.lproj;
+			name = FunWeather;
 			sourceTree = "<group>";
 		};
 		BB2F792B24A3F905000567C9 /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
 				BB2F792C24A3F905000567C9 /* Expo.plist */,
-				AEFFC248F6914CA3B3BD3E9B /* it.lproj */,
-				C29FE58918A34CEF9A325683 /* en.lproj */,
 			);
 			name = Supporting;
 			path = FunWeather/Supporting;
-			sourceTree = "<group>";
-		};
-		C29FE58918A34CEF9A325683 /* en.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				EB38278BD37748AE84E764F8 /* InfoPlist.strings */,
-			);
-			name = en.lproj;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -161,13 +140,13 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "FunWeather" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				A6621443DEAC3E58E0430E50 /* [Expo] Configure project */,
+				0DBCAB374ACB31412907BB8D /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				38A1C391B354DC3B72C29F10 /* [CP] Embed Pods Frameworks */,
+				CAECA57309CE96162E3CA64F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -187,9 +166,7 @@
 				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 9LFWMM49MU;
 						LastSwiftMigration = 1250;
-						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -218,10 +195,8 @@
 			files = (
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				3E461D99554A48A4959DE609 /* SplashScreen in Resources */,
-				3C3E3A7E9FBB41058720E871 /* InfoPlist.strings in Resources */,
-				45DC28B6D20D46858FCB7BDB /* InfoPlist.strings in Resources */,
-				43B0C7BEBFACF22A7ECDCE91 /* PrivacyInfo.xcprivacy in Resources */,
+				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
+				36E460C592BC88613BAFB811 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,23 +240,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		38A1C391B354DC3B72C29F10 /* [CP] Embed Pods Frameworks */ = {
+		0DBCAB374ACB31412907BB8D /* [Expo] Configure project */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FunWeather/Pods-FunWeather-frameworks.sh",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
+			inputFileListPaths = (
 			);
-			name = "[CP] Embed Pods Frameworks";
+			inputPaths = (
+			);
+			name = "[Expo] Configure project";
+			outputFileListPaths = (
+			);
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FunWeather/Pods-FunWeather-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-FunWeather/expo-configure-project.sh\"\n";
 		};
 		800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -335,24 +311,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FunWeather/Pods-FunWeather-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A6621443DEAC3E58E0430E50 /* [Expo] Configure project */ = {
+		CAECA57309CE96162E3CA64F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FunWeather/Pods-FunWeather-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
 			);
-			name = "[Expo] Configure project";
-			outputFileListPaths = (
-			);
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-FunWeather/expo-configure-project.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FunWeather/Pods-FunWeather-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -362,7 +337,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */,
-				7ACDE77B58CCD55E9365D21D /* ExpoModulesProvider.swift in Sources */,
+				A62F2B7FA92F74F0D78B0121 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,30 +346,24 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C5AE8C517F7AADD3499C068A /* Pods-FunWeather.debug.xcconfig */;
+			baseConfigurationReference = 9B4C0DC175A4C870CF207176 /* Pods-FunWeather.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = FunWeather/FunWeather.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = 9LFWMM49MU;
+				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"FB_SONARKIT_ENABLED=1",
 				);
 				INFOPLIST_FILE = FunWeather/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Fun Weather";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -413,25 +382,19 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 41548C6044E26BE53ABDC136 /* Pods-FunWeather.release.xcconfig */;
+			baseConfigurationReference = 5986BBFBC375B6BAC1FB2859 /* Pods-FunWeather.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = FunWeather/FunWeather.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = 9LFWMM49MU;
+				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = FunWeather/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Fun Weather";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -502,7 +465,10 @@
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -557,7 +523,10 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
