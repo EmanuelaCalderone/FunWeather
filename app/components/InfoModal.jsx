@@ -128,8 +128,8 @@ const styles = StyleSheet.create({
     },
 
     support: {
-        fontSize: isTablet() ? scaledSize(14) : 15,
-        fontWeight: "600",
+        fontSize: isTablet() ? scaledSize(13) : 14,
+        fontWeight: "550",
         textAlign: "center",
     },
 

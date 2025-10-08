@@ -4,47 +4,39 @@ import { translations } from '../utils/translations';
 
 export async function scheduleDaily10AM(lang = 'it') {
     try {
-        //se non ci sono notifiche attive, resetta il flag in AsyncStorage
-        const scheduled = await Notifications.getAllScheduledNotificationsAsync();
-        if (scheduled.length === 0) {
-            await AsyncStorage.removeItem('dailyWeatherScheduled');
+        //cancello eventuali vecchie notifiche "dailyWeather"
+        const all = await Notifications.getAllScheduledNotificationsAsync();
+        for (const n of all) {
+            if (n.content.data?.type === 'dailyWeather') {
+                await Notifications.cancelScheduledNotificationAsync(n.identifier);
+            }
         }
 
-        // controllo se la notifica è già stata programmata
-        const alreadyScheduled = await AsyncStorage.getItem('dailyWeatherScheduled');
-        if (alreadyScheduled === 'true') {
-            console.log('Notifica già impostata (flag AsyncStorage).');
-            return;
-        }
+        await AsyncStorage.removeItem('dailyWeatherScheduled');
 
-        // controllo permessi notifiche
+        //controllo permessi
         const { status: existingStatus } = await Notifications.getPermissionsAsync();
         let finalStatus = existingStatus;
-
         if (existingStatus !== 'granted') {
             const { status } = await Notifications.requestPermissionsAsync();
             finalStatus = status;
         }
-
         if (finalStatus !== 'granted') {
             console.log('Permessi notifica negati.');
             return;
         }
 
-        // verifica notifiche già schedulate 
-        const scheduledAgain = await Notifications.getAllScheduledNotificationsAsync();
-        const alreadyScheduledNotification = scheduledAgain.some(
-            (n) => n.content.data?.type === 'dailyWeather'
-        );
-
-        if (alreadyScheduledNotification) {
-            console.log('Notifica giornaliera già programmata (Expo Notifications).');
-            await AsyncStorage.setItem('dailyWeatherScheduled', 'true');
-            return;
+        // calcolo la prossima ora locale 10:00
+        const now = new Date();
+        const trigger = new Date(now);
+        trigger.setHours(10, 0, 0, 0);
+        if (trigger <= now) {
+            // se sono già passate le 10, programmo per domani
+            trigger.setDate(trigger.getDate() + 1);
         }
 
-        // programmo la notifica alle 10:00 ogni giorno
-        const id = await Notifications.scheduleNotificationAsync({
+        // schedulo la notifica singola
+        await Notifications.scheduleNotificationAsync({
             content: {
                 title: 'FunWeather',
                 body:
@@ -53,14 +45,10 @@ export async function scheduleDaily10AM(lang = 'it') {
                 sound: 'default',
                 data: { type: 'dailyWeather' },
             },
-            trigger: {
-                hour: 10,
-                minute: 0,
-                repeats: true,
-            },
+            trigger,
         });
 
-        // salvo lo stato per evitare rischedulazioni future
+        // salvo il flag per evitare rischedulazioni inutili
         await AsyncStorage.setItem('dailyWeatherScheduled', 'true');
     } catch (error) {
         console.error('Errore nella programmazione della notifica:', error);

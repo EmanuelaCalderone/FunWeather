@@ -54,7 +54,7 @@ export const translations = {
             author: "Autore: Emanuela Calderone",
             bug: "Per contattarmi, segnalare bug o per proporre una battuta che potrebbe apparire nel prossimo aggiornamento:",
             close: "Chiudi",
-            support: "Ti piace quest'app? Qui trovi maggiori informazioni!"
+            support: "Ti piace quest'app? Supporta la sviluppatrice!"
         },
         //placeholder in caso di no gps
         noResults: "Nessuna corrispondenza trovata",
@@ -122,7 +122,7 @@ export const translations = {
             author: "Author: Emanuela Calderone",
             bug: "To contact me, report a bug, or suggest your own joke that might appear in the next update:",
             close: "Close",
-            support: "Do you like this app? Find out more here!"
+            support: "Do you like this app? Support the developer!"
         },
         //placeholder in caso di no gps
         noResults: "No matches found",
