@@ -1,6 +1,5 @@
 // built-in components
-import { Text, View, ImageBackground, StyleSheet, FlatList, ActivityIndicator, Pressable, Platform, Image, Alert } from "react-native";
-
+import { Text, View, ImageBackground, StyleSheet, FlatList, ActivityIndicator, Pressable, Platform, Image, Alert, AppState } from "react-native";
 // hook
 import { useEffect, useContext, useCallback, useMemo, useState, useRef } from "react";
 
@@ -35,6 +34,17 @@ import { useWeather } from "../hooks/useWeather";
 
 // libreria esterna per safe area
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+Notifications.setNotificationHandler({
+    handleNotification: async () => {
+        const isActive = AppState.currentState === 'active';
+        return {
+            shouldShowAlert: !isActive,   //no notifica se app aperta alle 10
+            shouldPlaySound: !isActive,
+            shouldSetBadge: false,
+        };
+    },
+});
 
 export default function Home() {
 
@@ -202,7 +212,7 @@ export default function Home() {
     useEffect(() => {
         if (!isLoaded) return;
         scheduleDaily10AM(language);
-    }, [isLoaded, language]);
+    }, [language]);
 
     // spinner solo se:
     // - settings non pronti
@@ -354,15 +364,23 @@ export default function Home() {
                                     onPress={() => setShowInfo(true)}
                                     style={[styles.buttonBase, styles.sideButton]}
                                 >
-                                    <Ionicons name="help-circle-outline" size={25} color="white" />
+                                    <Ionicons
+                                        name="help-circle-outline"
+                                        size={isTablet() ? scaledSize(25) : 25}
+                                        color="white"
+                                    />
+
                                 </Pressable>
 
                                 <Pressable
                                     onPress={useCurrentLocation}
                                     style={[styles.buttonBase, styles.sideButton]}
                                 >
-                                    <Ionicons name="locate-outline" size={25} color="white" />
-                                </Pressable>
+                                    <Ionicons
+                                        name="locate-outline"
+                                        size={isTablet() ? scaledSize(25) : 25}
+                                        color="white"
+                                    />                                </Pressable>
                             </View>
 
                             {/* Colonna destra: toggle centrali */}
@@ -703,6 +721,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         alignSelf: "center",
+        gap: isTablet() ? scaledSize(10) : 6,
     },
 
     info: {

@@ -2,7 +2,7 @@ export default {
   expo: {
     name: "Fun Weather",
     slug: "FunWeather",
-    version: "1.1.0",
+    version: "1.1.2",
     orientation: "default",
     scheme: "funweather",
     userInterfaceStyle: "automatic",
@@ -18,7 +18,7 @@ export default {
 
     ios: {
       bundleIdentifier: "com.anonymous.FunWeather",
-      buildNumber: "2",
+      buildNumber: "4",
       supportsTablet: true,
       infoPlist: {
         UILaunchStoryboardName: "SplashScreen",
@@ -71,7 +71,7 @@ export default {
         {
           icon: "./app/assets/images/iconAndroid.png",
           color: "#194350",
-          mode: "default",
+          mode: "production",
           useNextNotificationsApi: true
         }
       ]

@@ -31,7 +31,7 @@ function CitySearch({ onSelectCity }) {
     const [modalVisible, setModalVisible] = useState(false);
     const [showNoResults, setShowNoResults] = useState(false);
 
-    const validFeatureCodes = ["PPL", "PPLA", "PPLC", "PPLS", "PPLA2", "PPLA3"];
+    const validFeatureCodes = ["PPL", "PPLA", "PPLC", "PPLS", "PPLA2", "PPLA3", "ADM2", "ADM3"];
 
     // Messaggio "nessun risultato"
     useEffect(() => {
@@ -68,12 +68,13 @@ function CitySearch({ onSelectCity }) {
 
                     data.results.forEach((item) => {
                         if (!validFeatureCodes.includes(item.feature_code)) return;
+                        if (item.population && item.population < 800) return;
 
                         const itemNameNormalized = normalizeName(item.name);
                         if (!itemNameNormalized.includes(queryNormalized)) return;
 
                         // chiave affidabile senza admin1
-                        const key = `${itemNameNormalized}-${item.country}`;
+                        const key = `${itemNameNormalized}-${item.admin1}-${item.country}`;
 
                         if (!seen.has(key)) {
                             seen.set(key, {

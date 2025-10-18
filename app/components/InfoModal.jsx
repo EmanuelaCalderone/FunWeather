@@ -12,11 +12,6 @@ export default function InfoModal({ visible, onClose }) {
     const { language } = useContext(SettingsContext);
     const t = translations[language]?.info || translations.it.info;
 
-    //apertura link esterno per supporto
-    const handleBuyCoffee = () => {
-        Linking.openURL("https://www.buymeacoffee.com/emanuelacld");
-    };
-
     return (
         <Modal
             visible={visible}
@@ -39,15 +34,14 @@ export default function InfoModal({ visible, onClose }) {
                             <FontAwesome name="github" style={styles.icon} />
                         </Pressable>
 
+                        <Pressable onPress={() => Linking.openURL("https://www.emanuelacalderone.com")}>
+                            <Ionicons name="globe-outline" style={styles.icon} />
+                        </Pressable>
+
                         <Pressable onPress={() => Linking.openURL("https://www.linkedin.com/in/emanuela-calderone-webdeveloper/")}>
                             <FontAwesome name="linkedin" style={styles.icon} />
                         </Pressable>
                     </View>
-
-                    {/* Bottone Offrimi un caffè */}
-                    <Pressable style={styles.coffeeButton} onPress={() => Linking.openURL("https://www.buymeacoffee.com/emanuelacld")}>
-                        <Text style={styles.support}>☕ {t.support}</Text>
-                    </Pressable>
 
 
                     <Pressable style={styles.closeButton} onPress={onClose}>
@@ -115,16 +109,6 @@ const styles = StyleSheet.create({
     icon: {
         color: "#CCCCCC",
         fontSize: isTablet() ? scaledSize(24) : 28,
-    },
-
-    coffeeButton: {
-        marginTop: isTablet() ? scaledSize(12) : 16,
-        backgroundColor: "#FFFFFF",
-        paddingVertical: isTablet() ? scaledSize(10) : 12,
-        paddingHorizontal: isTablet() ? scaledSize(24) : 28,
-        borderRadius: isTablet() ? scaledSize(24) : 30,
-        alignItems: "center",
-        justifyContent: "center",
     },
 
     support: {
